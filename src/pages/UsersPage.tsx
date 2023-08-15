@@ -11,6 +11,13 @@ export type User = {
     phone: string;
     website: string;
 }
+const defaultUser = {
+    id: 0,
+    name: '',
+    email: '',
+    phone: '',
+    website: ''
+}
 function UsersPage() {
     const [open, setOpen] = useState(false);
     const { data, isLoading, isError, error } = useQuery({
@@ -20,7 +27,7 @@ function UsersPage() {
             return response.data;
         }
     });
-    const [selectedUser, setSelectedUser] = useState<User | null>(null);
+    const [selectedUser, setSelectedUser] = useState<User>(defaultUser);
     const queryClient = useQueryClient();
     const newUser = useMutation({
         mutationKey: ['newUser'],
@@ -82,13 +89,13 @@ function UsersPage() {
     }
     function handleSubmitUser(){
         setOpen(!open);
-        if(selectedUser){
+        if(selectedUser.name.length>0){
             editUser.mutate(selectedUser? selectedUser:{name:'',email:'',id:3,phone:'',website:''})
         }
     }
     function handleCloseModal(){
         setOpen(!open)
-        setSelectedUser(null)
+        setSelectedUser(defaultUser)
     }
     if (isLoading) return <div>Loading...</div>
     if (isError) return <div>{(error as Error).message}</div>

@@ -92,6 +92,7 @@ function UsersPage() {
         if(selectedUser.name.length>0){
             editUser.mutate(selectedUser? selectedUser:{name:'',email:'',id:3,phone:'',website:''})
         }
+        setSelectedUser(defaultUser)
     }
     function handleCloseModal(){
         setOpen(!open)
